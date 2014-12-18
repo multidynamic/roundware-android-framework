@@ -67,6 +67,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.UnknownHostException;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
@@ -88,7 +89,7 @@ import java.util.TimerTask;
  * 
  * @author Rob Knapen
  */
-@SuppressLint("DefaultLocale") public class RWService extends Service implements Observer {
+@SuppressLint("DefaultLocale") public class RWService extends Service implements Observer, RWIcecastInputStream.IcyMetaDataListener {
     
     // debugging
     private final static String TAG = "RWService";
@@ -347,7 +348,7 @@ import java.util.TimerTask;
         }else{
             //TODO if android 4.1+ use exoPlayer instead of mediaPlayer
             if (mProxy == null) {
-                mProxy = new RWStreamProxy();
+                mProxy = new RWStreamProxy(this);
                 mProxy.init();
                 mProxy.start();
             }
@@ -782,6 +783,12 @@ import java.util.TimerTask;
         return Service.START_STICKY;
     }
 
+
+    @Override
+    public void OnMetaDataReceived(String rawMetaData) {
+        Map<String, String> map = RWIcecastInputStream.parseMetadata(rawMetaData);
+        // TODO broadcast results of map?
+    }
 
     /**
      * When not already playing, create a music player and start its

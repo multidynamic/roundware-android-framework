@@ -38,6 +38,8 @@ public class RWIcecastInputStream extends BufferedInputStream {
 
     private int metaint;
     private int bytesUntilNextInfos;
+    private IcyMetaDataListener listener = null;
+
 
     public RWIcecastInputStream(InputStream in, int size, int metaint) {
         super(in, size);
@@ -45,6 +47,9 @@ public class RWIcecastInputStream extends BufferedInputStream {
         bytesUntilNextInfos = metaint;
     }
 
+    public void setIcyMetaDataListener(IcyMetaDataListener listener){
+        this.listener = listener;
+    }
 
     /**
      * {@inheritDoc}
@@ -88,13 +93,15 @@ public class RWIcecastInputStream extends BufferedInputStream {
     private void getIcyInfos() throws IOException {
         bytesUntilNextInfos = metaint;
         int length = super.read() * 16;
-        Log.d(CLASSNAME, "Length:" + String.valueOf(length));
+        //Log.d(CLASSNAME, "Length:" + String.valueOf(length));
         if (length > 0) {
             String rawMetadata = readMetadata(length);
-            Log.i(CLASSNAME, rawMetadata);
+            Log.v(CLASSNAME, rawMetadata);
 
-            //TODO parse
-            //TODO notify listeners
+            // notify listener
+            if(listener != null){
+               listener.OnMetaDataReceived(rawMetadata);
+            }
         }
     }
 
@@ -134,4 +141,9 @@ public class RWIcecastInputStream extends BufferedInputStream {
         super.read(metadata, 0, length);
 		return new String(metadata, "UTF-8");
     }
+
+    public interface IcyMetaDataListener{
+        public void OnMetaDataReceived(String rawMetaData);
+    }
+
 }
