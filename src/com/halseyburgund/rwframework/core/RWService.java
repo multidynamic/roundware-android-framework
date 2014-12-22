@@ -803,11 +803,11 @@ import java.util.TimerTask;
             if(/*random.nextBoolean()*/ true){
                 StringBuilder sb = new StringBuilder();
                 sb.append("StreamTitle='asset=123&tags=");
-                sb.append(Math.abs(random.nextInt() % 100)).append(",");
-                sb.append(Math.abs(random.nextInt() % 100)).append(",");
-                sb.append(Math.abs(random.nextInt() % 100)).append(",");
-                sb.append(Math.abs(random.nextInt() % 100)).append(",");
-                sb.append(RW.DEBUG_FAUX_TAG++ %5);
+                sb.append(Math.abs(random.nextInt() % 100) + 6).append(",");
+                sb.append(Math.abs(random.nextInt() % 100) + 6).append(",");
+                sb.append(Math.abs(random.nextInt() % 100) + 6).append(",");
+                sb.append(Math.abs(random.nextInt() % 100) + 6).append(",");
+                sb.append(RW.DEBUG_FAUX_TAG++ %6);
                 sb.append("';\0\0\0");
                 rawMetaData = sb.toString();
                 Log.i(TAG,"Pushing faux meta: " + rawMetaData);
