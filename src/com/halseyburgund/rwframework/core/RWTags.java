@@ -194,6 +194,7 @@ public class RWTags {
     // single option for a tag
     public class RWOption {
         public String data;
+        public String description;
         public int order;
         public int tagId;
         public String value;
@@ -368,6 +369,7 @@ public class RWTags {
                     RWOption o = new RWOption();
                     o.order = option.getInt(JSON_KEY_TAG_OPTION_ORDER);
                     o.data = option.getString(JSON_KEY_TAG_OPTION_DATA);
+                    o.description = option.optString(JSON_KEY_TAG_OPTION_DESCRIPTION);
                     o.tagId = option.getInt(JSON_KEY_TAG_OPTION_ID);
                     o.value = option.getString(JSON_KEY_TAG_OPTION_VALUE);
 
