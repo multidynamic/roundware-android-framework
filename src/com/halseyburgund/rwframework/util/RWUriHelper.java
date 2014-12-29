@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,9 +41,7 @@ public class RWUriHelper {
         for (String param : params) {
             if (!TextUtils.isEmpty(param)) {
                 String tags[] = param.split(",|;|:|\\+");
-                for(String tag : tags){
-                    out.add(tag);
-                }
+                Collections.addAll(out, tags);
             }
         }
         return out;
@@ -62,7 +61,7 @@ public class RWUriHelper {
      *
      * @param uri
      * @param key
-     * @return parameters URL-decoded
+     * @return parameters URL-decoded   
      */
     public static List<String> getQueryParameters(Uri uri, String key){
         List<String> params = uri.getQueryParameters(key);

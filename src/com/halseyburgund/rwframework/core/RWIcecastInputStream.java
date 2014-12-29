@@ -130,7 +130,7 @@ public class RWIcecastInputStream extends BufferedInputStream {
         for (int i = 0; i < metaParts.length; i++) {
             m = p.matcher(metaParts[i]);
             if (m.find()) {
-                metadata.put((String) m.group(1), (String) m.group(2));
+                metadata.put(m.group(1), m.group(2));
             }
         }
 
